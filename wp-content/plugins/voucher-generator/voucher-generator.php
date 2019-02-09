@@ -14,12 +14,13 @@ Domain Path:  /languages/vg
 */
 
 define('VG_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+define('VG_SHORTCODE_POST_TYPE', 'vg_shortcode');
 
 include_once VG_PLUGIN_PATH . 'class-vg.php';
 include_once VG_PLUGIN_PATH . 'admin/class-vg-admin.php';
 
-if (is_admin()) {
-    $vg_object = VG::get_instance();
-} else {
+if (is_admin() === true) {
     $vg_admin_object = VG_Admin::get_instance();
+} else {
+    $vg_object = VG::get_instance();
 }

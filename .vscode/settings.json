@@ -1,0 +1,7 @@
+{
+    "php.executablePath": "C:\\xampp\\php\\php.exe",
+    "php.validate.executablePath": "C:\\xampp\\php\\php.exe",
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wrappingIndent": "deepIndent",
+    "editor.wordWrapColumn": 120
+}

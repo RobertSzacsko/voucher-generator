@@ -22,6 +22,7 @@ class VG_Admin
 
     public function enqueue_styles_scripts()
     {
+        wp_enqueue_script( 'dragula-drag-drop', 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js', array(), '3.7.2', true);
         wp_register_style( 'vg-admin', '/wp-content/plugins/voucher-generator/admin/css/admin.css', false, '1.0.0' );
         wp_enqueue_style( 'vg-admin' );
     }

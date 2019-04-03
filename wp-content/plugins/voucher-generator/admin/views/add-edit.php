@@ -3,7 +3,7 @@
     <form method="post" action="<?= admin_url( 'admin-post.php' ); ?>">
         <input type="hidden" name="action" value="vg_add_edit_forms" ?>
         <select>
-            <?php $this->_the_shortcodes(); ?>
+            <?php $this->the_shortcodes(); ?>
         </select>
     </form>
 
@@ -37,7 +37,12 @@
                 </div>
             </div>
             <div class="col col-sm-12 col-md-8">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint alias vitae temporibus fugiat, accusantium error atque molestias veniam, reprehenderit repudiandae iure nulla pariatur inventore assumenda. Alias illum exercitationem eos odit.
+                <div class="target-container">
+                    <div class="target">
+                        <form class="form-class" action="">
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

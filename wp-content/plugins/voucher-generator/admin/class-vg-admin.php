@@ -22,9 +22,11 @@ class VG_Admin
 
     public function enqueue_styles_scripts()
     {
-        wp_enqueue_script( 'dragula-drag-drop', 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js', array(), '3.7.2', true);
+        wp_enqueue_script( 'dragula-drag-drop', 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js', array(), null, true);
         wp_register_style( 'vg-admin', '/wp-content/plugins/voucher-generator/admin/css/admin.css', false, '1.0.0' );
         wp_enqueue_style( 'vg-admin' );
+        wp_register_script( 'vg-admin-js', '/wp-content/plugins/voucher-generator/admin/js/admin.js', 'jquery', '1.0.0', true);
+        wp_enqueue_script( 'vg-admin-js' );
     }
 
     public function add_admin_pages()
@@ -40,7 +42,7 @@ class VG_Admin
         require_once VG_PLUGIN_PATH . '/admin/views/add-edit.php';
     }
 
-    private function _the_shortcodes()
+    private function the_shortcodes()
     {
         echo $this->get_the_shortcodes();
     }

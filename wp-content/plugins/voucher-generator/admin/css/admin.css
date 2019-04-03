@@ -27,12 +27,12 @@
     width: 100%;
 }
 
-.select-options {    
+.select-options, .form-class {    
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 0 20px #c2c2c2;
 }
-.select-options > div:last-child{
+.select-options > div:last-child, .form-class > div:last-child{
     padding-bottom: 5px;
 }
 .option-container {
@@ -47,6 +47,9 @@
     width: 100%;
     height: 32px;
     text-align: center;
+}
+.form-class {
+    min-height: 100px;
 }
 
 @media all and (min-width: 800px) {

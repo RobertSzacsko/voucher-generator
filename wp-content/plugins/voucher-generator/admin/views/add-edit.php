@@ -12,25 +12,25 @@
             <div class="col col-sm-12 col-md-4">
                 <div class="select-options-container">
                     <div class="select-options">
-                        <div class="option-container">
+                        <div class="option-container grab">
                             <div class="input-text">Input text</div>
                         </div>
-                        <div class="option-container">
+                        <div class="option-container grab">
                             <div class="input-email">Input email</div>
                         </div>
-                        <div class="option-container">
+                        <div class="option-container grab">
                             <div class="input-date">Input date</div>
                         </div>
-                        <div class="option-container">
+                        <div class="option-container grab">
                             <div class="input-number">Input number</div>
                         </div>
-                        <div class="option-container">
+                        <div class="option-container grab">
                             <div class="input-checkbox">Input checkbox</div>
                         </div>
-                        <div class="option-container">
+                        <div class="option-container grab">
                             <div class="input-radio">Input radio</div>
                         </div>
-                        <div class="option-container">
+                        <div class="option-container grab">
                             <div class="textarea">Textarea</div>
                         </div>
                     </div>

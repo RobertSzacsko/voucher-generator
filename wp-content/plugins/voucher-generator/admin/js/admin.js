@@ -15,6 +15,6 @@ dragula([document.querySelector('.select-options'), document.querySelector('.for
         }
 }).on('drop', function (el, target, source, sibling) {
     if (source === document.querySelector('.select-options') && target === document.querySelector('.form-class')) {
-        document.getElementById(el.className).modal('show');
+        // document.getElementById(el.className).modal('show');
     }
 });

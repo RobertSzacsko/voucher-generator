@@ -8,8 +8,8 @@
     </form>
 
     <main id="main">
-        <div class="container">
-            <div class="col col-sm-12 col-md-4">
+        <div class="vg-container">
+            <div class="vg-col vg-col-sm-12 vg-col-md-4">
                 <div class="select-options-container">
                     <div class="select-options">
                         <div class="option-container grab">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col col-sm-12 col-md-8">
+            <div class="vg-col vg-col-sm-12 vg-col-md-8">
                 <div class="target-container">
                     <div class="target">
                         <form class="form-class" action="">

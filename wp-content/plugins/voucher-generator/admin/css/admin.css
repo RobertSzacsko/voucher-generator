@@ -1,29 +1,29 @@
-.container {
+.vg-container {
     display: flex;
     flex-flow: column wrap;
     font-size: 16px;
 }
 
-.col > div{
+.vg-col > div{
     padding: 10px;
 }
 
-.col-sm-3 {
+.vg-col-sm-3 {
     width: 25%;
 }
-.col-sm-4 {
+.vg-col-sm-4 {
     width: 33.3333333333%;
 }
-.col-sm-6 {
+.vg-col-sm-6 {
     width: 50%;
 }
-.col-sm-8 {
+.vg-col-sm-8 {
     width: 66.6666666667%;
 }
-.col-sm-9 {
+.vg-col-sm-9 {
     width: 75%;
 }
-.col-sm-12 {
+.vg-col-sm-12 {
     width: 100%;
 }
 
@@ -53,26 +53,26 @@
 }
 
 @media all and (min-width: 800px) {
-    .container {
+    .vg-container {
         flex-flow: row wrap;
     }
 
-    .col-md-3 {
+    .vg-col-md-3 {
         width: 25%;
     }
-    .col-md-4 {
+    .vg-col-md-4 {
         width: 33.3333333333%;
     }
-    .col-md-6 {
+    .vg-col-md-6 {
         width: 50%;
     }
-    .col-md-8 {
+    .vg-col-md-8 {
         width: 66.6666666667%;
     }
-    .col-md-9 {
+    .vg-col-md-9 {
         width: 75%;
     }
-    .col-md-12 {
+    .vg-col-md-12 {
         width: 100%;
     }
 }

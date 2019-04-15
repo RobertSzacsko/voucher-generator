@@ -61,7 +61,7 @@ class VG_Admin
 
     public function get_modal_settings()
     {
-        // TODO aici ai ramas (merge cererea de ajax)
+        // TODO aici ai ramas (merge cererea de ajax)   
         error_log(print_r($_REQUEST, 1));
 
 

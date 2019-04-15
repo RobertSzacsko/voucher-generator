@@ -9,6 +9,8 @@ class VG_Admin
         add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
         add_action( 'admin_post_vg_add_edit_forms', array( $this, 'add_edit_action' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles_scripts' ) );
+
+        add_action( 'wp_ajax_get_modal_settings', array( $this, 'get_modal_settings' ) );
     }
 
     public static function get_instance()
@@ -39,6 +41,9 @@ class VG_Admin
         wp_enqueue_script( 'bootstrap-popper' );
         wp_register_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', 'bootstrap-jquery', '4.0.0', true);
         wp_enqueue_script( 'bootstrap' );
+
+        // include vgJSON object to be used in vg-admin-js script
+        wp_localize_script( 'vg-admin-js', 'vgJSON', array( 'ajaxUrl' => admin_url( 'admin-ajax.php' ) ) );
     }
 
     public function add_admin_pages()
@@ -52,6 +57,15 @@ class VG_Admin
             die(__( 'You do not have permision to be here!', 'vg' ));
         }
         require_once VG_PLUGIN_PATH . '/admin/views/add-edit.php';
+    }
+
+    public function get_modal_settings()
+    {
+        // TODO aici ai ramas (merge cererea de ajax)
+        error_log(print_r($_REQUEST, 1));
+
+
+        wp_die();
     }
 
     private function the_shortcodes()

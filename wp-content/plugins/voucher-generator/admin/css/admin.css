@@ -43,13 +43,17 @@
     border-radius: 4px;
     line-height: 30px;
 }
-.input-text, .input-email, .input-number, .input-date, .input-checkbox, .input-radio, .textarea {
+.text, .email, .number, .date, .checkbox, .radio, .textarea {
     width: 100%;
     height: 32px;
     text-align: center;
 }
 .form-class {
     min-height: 100px;
+}
+
+.modal-setings.hide {
+    display: none;
 }
 
 @media all and (min-width: 800px) {

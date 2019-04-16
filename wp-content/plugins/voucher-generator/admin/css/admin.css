@@ -27,7 +27,7 @@
     width: 100%;
 }
 
-.select-options, .form-class {    
+.select-options, .form-class {
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 0 20px #c2c2c2;
@@ -52,8 +52,47 @@
     min-height: 100px;
 }
 
-.modal-setings.hide {
+.modal-setings.hide,
+.row.hide {
     display: none;
+}
+
+.toplevel_page_voucher-generator #wpadminbar, .toplevel_page_voucher-generator #adminmenuwrap {
+    z-index: 1000;
+}
+
+#general-modal {
+    margin-top: 5rem;
+}
+
+.modal-body > .container > div {
+    border-bottom: 1px solid #c3c3c3;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.modal-body > .container > div:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.align-vertical {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+}
+
+.second-row {
+    margin-top: 10px;
+}
+.second-row input[type=text] {
+    width: 70%;
+    float: right;
+}
+
+.clear-float {
+    clear: both;
 }
 
 @media all and (min-width: 800px) {

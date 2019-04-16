@@ -14,7 +14,7 @@ jQuery(document).ready(function($){
         });
         return o;
     };
-    
+
     dragula([document.querySelector('.select-options'), document.querySelector('.form-class')], {
         mirrorContainer: document.body,
         copy: function (el, source) {
@@ -30,23 +30,29 @@ jQuery(document).ready(function($){
         if (source === document.querySelector('.select-options') && target === document.querySelector('.form-class')) {
             // document.getElementById(el.className).modal('show');
             setInputValue($('#modal-settings #field-id'), el.firstElementChild.className);
-            initModal($('#modal-settings'));
+            makeAjaxRequest($('#modal-settings'), el.firstElementChild.className);
         }
     });
 
-    function initModal($form) {
-        let settings = makeAjaxRequest($form);
-    }
-    
-    function makeAjaxRequest($form) {
+    $('#general-modal input[type=checkbox]').on('change', function (event) {
+        var inputId = $(this).attr('name').split('[')[0];
+
+        if ($(this).is(':checked')) {
+            $('#' + inputId + '-col > div.second-row').removeClass('hide');
+        } else {
+            $('#' + inputId + '-col > div.second-row').addClass('hide');
+        }
+    });
+
+    function makeAjaxRequest($form, field) {
         var ajaxData = $form.serializeObject();
         ajaxData['action'] = $form.attr('action');
-        $.ajax({
+        return $.ajax({
             url:            vgJSON.ajaxUrl,
             type:           $form.attr('method'),
             data:           ajaxData,
             success: function (response, status, xhr) {
-                alert(response);
+                initModal(response, field);
             },
             error: function (xhr, status, error) {
 
@@ -54,8 +60,32 @@ jQuery(document).ready(function($){
         })
     }
 
+    function initModal(ajaxResponse, field) {
+        var modalId = getModalId(field);
+
+        $.each(ajaxResponse,function(indexLevel1, valueLevel1) {
+            $.each(valueLevel1,function(indexLevel2, valueLevel2) {
+                $(modalId + ' #' + indexLevel1 + '-' + indexLevel2 + '-span').text(valueLevel2);
+            });
+        });
+
+        $(modalId).modal({
+            backdrop: 'static',
+            keyboard: false,
+            show: true
+        });
+    }
+
     function setInputValue($input, value)
     {
         $($input).val(value);
+    }
+
+    function getModalId(field) {
+        if (field !== 'radio' && field !== 'checkbox') {
+            return '#general-modal';
+        } else {
+            return '#special-modal';
+        }
     }
 });

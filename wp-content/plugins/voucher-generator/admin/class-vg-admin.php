@@ -24,22 +24,24 @@ class VG_Admin
 
     public function enqueue_styles_scripts()
     {
-        wp_enqueue_script( 'dragula-drag-drop', 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js', array(), null, true);
-        wp_register_style( 'vg-admin', '/wp-content/plugins/voucher-generator/admin/css/admin.css', false, '1.0.0' );
-        wp_enqueue_style( 'vg-admin' );
+        // dragula
+        wp_enqueue_script( 'dragula-drag-drop', 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js', array(), null, true );
         wp_register_style( 'dragula', '/wp-content/plugins/voucher-generator/admin/css/dragula.css', false, '1.0.0' );
         wp_enqueue_style( 'dragula' );
-        wp_register_script( 'vg-admin-js', '/wp-content/plugins/voucher-generator/admin/js/admin.js', 'jquery', '1.0.0', true);
+
+        wp_register_style( 'vg-admin', '/wp-content/plugins/voucher-generator/admin/css/admin.css', false, '1.0.0' );
+        wp_enqueue_style( 'vg-admin' );
+        wp_register_style( 'vg-admin-radio-switch', '/wp-content/plugins/voucher-generator/admin/css/radio-switch.css', false, '1.0.0' );
+        wp_enqueue_style( 'vg-admin-radio-switch' );
+        wp_register_script( 'vg-admin-js', '/wp-content/plugins/voucher-generator/admin/js/admin.js', 'jquery', '1.0.0', true );
         wp_enqueue_script( 'vg-admin-js' );
 
         // bootstrap
         wp_register_style( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', false, '4.0.0' );
         wp_enqueue_style( 'bootstrap' );
-        wp_register_script( 'bootstrap-jquery', 'https://code.jquery.com/jquery-3.2.1.slim.min.js', '', '3.2.1', true);
-        wp_enqueue_script( 'bootstrap-jquery' );
-        wp_register_script( 'bootstrap-popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', 'bootstrap-jquery', '1.12.9', true);
+        wp_register_script( 'bootstrap-popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', 'jquery', '1.12.9', true );
         wp_enqueue_script( 'bootstrap-popper' );
-        wp_register_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', 'bootstrap-jquery', '4.0.0', true);
+        wp_register_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', 'jquery', '4.0.0', true );
         wp_enqueue_script( 'bootstrap' );
 
         // include vgJSON object to be used in vg-admin-js script
@@ -54,18 +56,40 @@ class VG_Admin
     public function add_edit_vouchers_form()
     {
         if ( ! current_user_can( 'manage_options' ) ) {
-            die(__( 'You do not have permision to be here!', 'vg' ));
+            die( __( 'You do not have permision to be here!', 'vg' ));
         }
         require_once VG_PLUGIN_PATH . '/admin/views/add-edit.php';
     }
 
     public function get_modal_settings()
     {
-        // TODO aici ai ramas (merge cererea de ajax)
-        error_log(print_r($_REQUEST, 1));
+        $response = array();
+        switch ( $_REQUEST['field'] ) {
+            case 'radio' :
+            case 'checkbox' :
 
+                break ;
+            default :
+                // text, email, number, date, textarea
+                // label (yes/no, text)
+                // placeholder (yes/no, text)
+                // required (yes/no)
+                $response['label'] = array(
+                    'radio_switch' => __( 'Do you want to use a label?', 'vg' ),
+                    'text' => __( 'Enter the text:', 'vg' ),
+                );
 
-        wp_die();
+                $response['placeholder'] = array(
+                    'radio_switch' => __( 'Do you want to use a placeholder?', 'vg' ),
+                    'text' => __( 'Enter the text:', 'vg' ),
+                );
+                
+                $response['required'] = array(
+                    'radio_switch' => __( 'This field is required?', 'vg' ),
+                );
+                break ;
+        }
+        wp_send_json( $response, 200 );
     }
 
     private function the_shortcodes()

@@ -44,6 +44,28 @@ jQuery(document).ready(function($){
         }
     });
 
+    $('.vg-save-btn').on('click touch', function (event) {
+        var count = $('.target-container .option-container').length;
+        var target = $('.target-container .option-container:last-child');
+        var field = $('.target-container .option-container:last-child div').attr('class');
+        $(this).parent().prev().find('input, textarea').each(function (index, tag) {
+            let name = $(tag).prop('name');
+            let value;
+            if ($(tag).prop('type') === 'checkbox') {
+                if ($(tag).prop('checked') === true) {
+                    value = 'yes';
+                } else {
+                    value = 'no';
+                }
+            } else {
+                value = $(tag).prop('value');
+            }
+
+            target.append('<input type="hidden" name="' + field + '-' + count + '[' + name + ']' + '" value="' + value + '" />');
+        });
+        $(this).closest('div.modal').modal('hide');
+    });
+
     function makeAjaxRequest($form, field) {
         var ajaxData = $form.serializeObject();
         ajaxData['action'] = $form.attr('action');

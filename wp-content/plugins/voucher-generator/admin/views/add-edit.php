@@ -121,7 +121,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><?php _e( 'Save', 'vg' ); ?></button>
+                <button type="button" class="btn btn-primary vg-save-btn"><?php _e( 'Save', 'vg' ); ?></button>
             </div>
             </div>
         </div>
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><?php _e( 'Save', 'vg' ); ?></button>
+                <button type="button" class="btn btn-primary vg-save-btn"><?php _e( 'Save', 'vg' ); ?></button>
             </div>
             </div>
         </div>

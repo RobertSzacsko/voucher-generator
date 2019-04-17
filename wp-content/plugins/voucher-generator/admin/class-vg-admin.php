@@ -67,21 +67,23 @@ class VG_Admin
         switch ( $_REQUEST['field'] ) {
             case 'radio' :
             case 'checkbox' :
+                $response['textarea'] = array(
+                    'text' => __( 'Enter options ( value:label )', 'vg' ),
+                );
 
+                $response['required'] = array(
+                    'radio_switch' => __( 'This field is required?', 'vg' ),
+                );
                 break ;
             default :
-                // text, email, number, date, textarea
-                // label (yes/no, text)
-                // placeholder (yes/no, text)
-                // required (yes/no)
                 $response['label'] = array(
                     'radio_switch' => __( 'Do you want to use a label?', 'vg' ),
-                    'text' => __( 'Enter the text:', 'vg' ),
+                    'text' => __( 'Enter the text', 'vg' ),
                 );
 
                 $response['placeholder'] = array(
                     'radio_switch' => __( 'Do you want to use a placeholder?', 'vg' ),
-                    'text' => __( 'Enter the text:', 'vg' ),
+                    'text' => __( 'Enter the text', 'vg' ),
                 );
                 
                 $response['required'] = array(

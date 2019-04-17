@@ -2,6 +2,7 @@
     display: flex;
     flex-flow: column wrap;
     font-size: 16px;
+    touch-action: none;
 }
 
 .vg-col > div{
@@ -61,7 +62,7 @@
     z-index: 1000;
 }
 
-#general-modal {
+#general-modal, #special-modal {
     margin-top: 5rem;
 }
 
@@ -93,6 +94,10 @@
 
 .clear-float {
     clear: both;
+}
+
+body.mobile.modal-open div#wpwrap {
+    position: relative;
 }
 
 @media all and (min-width: 800px) {

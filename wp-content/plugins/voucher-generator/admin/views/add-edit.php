@@ -127,6 +127,52 @@
         </div>
     </div>
 
+    <div id="special-modal" class="modal fade hide" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><?php _e( 'Settings', 'vg' ); ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div id="textarea-col">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <span id="textarea-text-span" class="align-vertical"></span>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <textarea name="textarea[text]"></textarea>
+                                <div class="clear-float"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="required-col">
+                        <div class="row">
+                            <div class="col-sm-9 col-md-9">
+                                <span id="required-radio_switch-span" class="align-vertical"></span>
+                            </div>
+                            <div class="col-sm-3 col-md-3">
+                                <label class="switch">
+                                    <input type="checkbox" name="required[radio_switch]">
+                                    <span class="slider round"></span>
+                                </label>
+                                <div class="clear-float"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"><?php _e( 'Save', 'vg' ); ?></button>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <form id="modal-settings" method="post" action="get_modal_settings" class="modal-setings hide">
         <input id="field-id" type="hidden" name="field" value="" />
     </form>

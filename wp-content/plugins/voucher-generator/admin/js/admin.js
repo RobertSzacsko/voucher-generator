@@ -62,6 +62,7 @@ jQuery(document).ready(function($){
 
     function initModal(ajaxResponse, field) {
         var modalId = getModalId(field);
+        resetModal(modalId);
 
         $.each(ajaxResponse,function(indexLevel1, valueLevel1) {
             $.each(valueLevel1,function(indexLevel2, valueLevel2) {
@@ -87,5 +88,14 @@ jQuery(document).ready(function($){
         } else {
             return '#special-modal';
         }
+    }
+
+    function resetModal(modalId)
+    {
+        $(modalId + ' .modal-body input[type=checkbox]').each(function (event) {
+            if ($(this).is(':checked')) { $(this).click(); }
+        });
+        $(modalId + ' .modal-body input[type=text], ' + modalId + ' textarea').val("");
+        $(modalId + ' .modal-body span:not(.slider)').text("");
     }
 });

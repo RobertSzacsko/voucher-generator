@@ -8,41 +8,84 @@
     </form>
 
     <main id="main">
-        <div class="vg-container">
-            <div class="vg-col vg-col-sm-12 vg-col-md-4">
-                <div class="select-options-container">
-                    <div class="select-options">
-                        <div class="option-container grab">
-                            <div class="text">Input text</div>
+        <form method="post" action="<?= admin_url( 'admin-post.php' ); ?>">
+            <input type="hidden" name="action" value="vg_save_form" />
+            <div class="vg-container">        
+                <div class="vg-col vg-col-sm-12 vg-col-md-9">
+                    <div class="vg-container">
+                        <div class="vg-col vg-col-sm-12 vg-col-md-4">
+                            <div class="select-options-container">
+                                <div class="select-options">
+                                    <div class="option-container grab">
+                                        <div class="text">Input text</div>
+                                    </div>
+                                    <div class="option-container grab">
+                                        <div class="email">Input email</div>
+                                    </div>
+                                    <div class="option-container grab">
+                                        <div class="date">Input date</div>
+                                    </div>
+                                    <div class="option-container grab">
+                                        <div class="number">Input number</div>
+                                    </div>
+                                    <div class="option-container grab">
+                                        <div class="checkbox">Input checkbox</div>
+                                    </div>
+                                    <div class="option-container grab">
+                                        <div class="radio">Input radio</div>
+                                    </div>
+                                    <div class="option-container grab">
+                                        <div class="textarea">Textarea</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="option-container grab">
-                            <div class="email">Input email</div>
+                        <div class="vg-col vg-col-sm-12 vg-col-md-8">
+                            <div class="target-container">
+                                <div class="target">
+                                </div>
+                            </div>
                         </div>
-                        <div class="option-container grab">
-                            <div class="date">Input date</div>
-                        </div>
-                        <div class="option-container grab">
-                            <div class="number">Input number</div>
-                        </div>
-                        <div class="option-container grab">
-                            <div class="checkbox">Input checkbox</div>
-                        </div>
-                        <div class="option-container grab">
-                            <div class="radio">Input radio</div>
-                        </div>
-                        <div class="option-container grab">
-                            <div class="textarea">Textarea</div>
+                    </div>
+                </div>
+                <div class="vg-col vg-col-sm-12 vg-col-md-3">
+                    <div class="vg-form-settings-container">
+                        <div class="vg-form-settings">
+                            <!--  Titlu-->
+                            <div class="vg-form-settings-panel-container">
+                                <div class="vg-form-settings-panel">
+                                    <span><?php _e( 'Form settings', 'vg' );?></span>
+                                </div>
+                            </div>
+                            <!-- titlu form-ului -->
+                            <div class="vg-form-settings-title-container">
+                                <div class="vg-form-settings-title">
+                                    <span><?php _e( 'Title', 'vg' );?></span>
+                                    <!-- TODO echo form-title -->
+                                    <input type="text" name="form-title" value="<?php echo '';?>" />
+                                </div>
+                            </div>
+                            <!-- data formului -->
+                            <div class="vg-form-settings-date-container">
+                                <div class="vg-form-settings-date">
+                                    <span><?php _e( 'Date', 'vg' );?></span>
+                                    <!-- TODO echo form-date -->
+                                    <input type="text" name="form-date" value="<?php echo '';?>" />
+                                </div>
+                            </div>
+                            <!-- save & preview -->
+                            <div class="vg-form-settings-actions-container">
+                                <div class="vg-form-settings-actions">
+                                    <!-- TODO echo form-actions -->
+                                    <input class="btn btn-secondary vg-preview" type="button" name="preview" value="<?php _e( 'Preview', 'vg' );?>" />
+                                    <input class="btn btn-primary vg-submit" type="submit" name="form-submit" value="<?php _e( 'Save', 'vg' );?>" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="vg-col vg-col-sm-12 vg-col-md-8">
-                <div class="target-container">
-                    <form class="form-class" action="">
-                    </form>
-                </div>
-            </div>
-        </div>
+        </form>
     </main>
 
     <div id="general-modal" class="modal fade hide" tabindex="-1" role="dialog">

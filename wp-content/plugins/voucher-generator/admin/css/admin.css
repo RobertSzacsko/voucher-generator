@@ -5,7 +5,8 @@
     touch-action: none;
 }
 
-.vg-col > div{
+.vg-col > div,
+.vg-form-settings > div {
     padding: 10px;
 }
 
@@ -28,12 +29,12 @@
     width: 100%;
 }
 
-.select-options, .form-class {
+.select-options, .target, .vg-form-settings {
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 0 20px #c2c2c2;
 }
-.select-options > div:last-child, .form-class > div:last-child{
+.select-options > div:last-child, .target > div:last-child{
     padding-bottom: 5px;
 }
 .option-container {
@@ -49,7 +50,7 @@
     height: 32px;
     text-align: center;
 }
-.form-class {
+.target {
     min-height: 100px;
 }
 
@@ -98,6 +99,33 @@
 
 body.mobile.modal-open div#wpwrap {
     position: relative;
+}
+
+.vg-form-settings-panel-container {
+    border-bottom: 1px solid #c3c3c3;
+    font-size: 1.2em;
+}
+
+.vg-form-settings-actions-container {
+    border-top: 1px solid #c3c3c3;
+}
+
+.vg-form-settings-title-container input,
+.vg-form-settings-date-container input {
+    float:right;
+    width: 50%;
+    height: 25px;
+    border-radius: 4px;
+}
+
+.vg-form-settings-title-container input:after,
+.vg-form-settings-date-container input:after,
+.vg-submit:after {
+    clear: both;
+}
+
+.vg-submit {
+    float: right;
 }
 
 @media all and (min-width: 800px) {

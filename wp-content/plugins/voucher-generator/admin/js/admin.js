@@ -15,19 +15,19 @@ jQuery(document).ready(function($){
         return o;
     };
 
-    dragula([document.querySelector('.select-options'), document.querySelector('.form-class')], {
+    dragula([document.querySelector('.select-options'), document.querySelector('.target')], {
         mirrorContainer: document.body,
         copy: function (el, source) {
                 return source === document.querySelector('.select-options')
             },
         accepts: function (el, target) {
-                return target === document.querySelector('.form-class')
+                return target === document.querySelector('.target')
             },
         removeOnSpill: function (el, target) {
-                return target === document.querySelector('.form-class')
+                return target === document.querySelector('.target')
             }
     }).on('drop', function (el, target, source, sibling) {
-        if (source === document.querySelector('.select-options') && target === document.querySelector('.form-class')) {
+        if (source === document.querySelector('.select-options') && target === document.querySelector('.target')) {
             // document.getElementById(el.className).modal('show');
             setInputValue($('#modal-settings #field-id'), el.firstElementChild.className);
             makeAjaxRequest($('#modal-settings'), el.firstElementChild.className);

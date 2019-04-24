@@ -7,7 +7,8 @@ class VG_Admin
     public function __construct()
     {
         add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
-        add_action( 'admin_post_vg_add_edit_forms', array( $this, 'add_edit_action' ) );
+        add_action( 'admin_post_vg_add_edit_forms', array( $this, 'add_edit_vouchers_form' ) );
+        add_action( 'admin_post_vg_save_form', array( $this, 'save_form' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles_scripts' ) );
 
         add_action( 'wp_ajax_get_modal_settings', array( $this, 'get_modal_settings' ) );
@@ -59,6 +60,15 @@ class VG_Admin
             die( __( 'You do not have permision to be here!', 'vg' ));
         }
         require_once VG_PLUGIN_PATH . '/admin/views/add-edit.php';
+    }
+
+    public function save_form()
+    {
+        $errors = [];
+        if (empty(($errors = $this->validate_request($_REQUEST))))
+        {
+            
+        }
     }
 
     public function get_modal_settings()

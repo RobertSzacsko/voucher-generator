@@ -35,7 +35,7 @@ jQuery(document).ready(function($){
     });
 
     $('#general-modal input[type=checkbox]').on('change', function (event) {
-        var inputId = $(this).attr('name').split('[')[0];
+        var inputId = $(this).attr('name').split('][')[0];
 
         if ($(this).is(':checked')) {
             $('#' + inputId + '-col > div.second-row').removeClass('hide');
@@ -61,7 +61,7 @@ jQuery(document).ready(function($){
                 value = $(tag).prop('value');
             }
 
-            target.append('<input type="hidden" name="' + field + '-' + count + '[' + name + ']' + '" value="' + value + '" />');
+            target.append('<input type="hidden" name="' + field + '-' + count + '[' + name + '" value="' + value + '" />');
         });
         $(this).closest('div.modal').modal('hide');
     });

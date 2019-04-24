@@ -106,7 +106,7 @@
                             </div>
                             <div class="col-sm-3 col-md-3">
                                 <label class="switch">
-                                    <input type="checkbox" name="label[radio_switch]">
+                                    <input type="checkbox" name="label][radio_switch]">
                                     <span class="slider round"></span>
                                 </label>
                                 <div class="clear-float"></div>
@@ -117,7 +117,7 @@
                                 <span id="label-text-span" class="align-vertical"></span>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <input type="text" name="label[text]">
+                                <input type="text" name="label][text]">
                                 <div class="clear-float"></div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                             </div>
                             <div class="col-sm-3 col-md-3">
                                 <label class="switch">
-                                    <input type="checkbox" name="placeholder[radio_switch]">
+                                    <input type="checkbox" name="placeholder][radio_switch]">
                                     <span class="slider round"></span>
                                 </label>
                                 <div class="clear-float"></div>
@@ -141,7 +141,7 @@
                                 <span id="placeholder-text-span" class="align-vertical"></span>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <input type="text" name="placeholder[text]">
+                                <input type="text" name="placeholder][text]">
                                 <div class="clear-float"></div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                             </div>
                             <div class="col-sm-3 col-md-3">
                                 <label class="switch">
-                                    <input type="checkbox" name="required[radio_switch]">
+                                    <input type="checkbox" name="required][radio_switch]">
                                     <span class="slider round"></span>
                                 </label>
                                 <div class="clear-float"></div>
@@ -187,7 +187,7 @@
                                 <span id="textarea-text-span" class="align-vertical"></span>
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <textarea name="textarea[text]"></textarea>
+                                <textarea name="textarea][text]"></textarea>
                                 <div class="clear-float"></div>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
                             </div>
                             <div class="col-sm-3 col-md-3">
                                 <label class="switch">
-                                    <input type="checkbox" name="required[radio_switch]">
+                                    <input type="checkbox" name="required][radio_switch]">
                                     <span class="slider round"></span>
                                 </label>
                                 <div class="clear-float"></div>

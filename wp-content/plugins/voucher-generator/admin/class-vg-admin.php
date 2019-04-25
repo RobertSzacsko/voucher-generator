@@ -8,7 +8,7 @@ class VG_Admin
     {
         add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
         add_action( 'admin_post_vg_add_edit_forms', array( $this, 'add_edit_vouchers_form' ) );
-        add_action( 'admin_post_vg_save_form', array( $this, 'save_form' ) );
+        add_action( 'admin_post_vg_save_form', array( $this, 'action_save_form' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles_scripts' ) );
 
         add_action( 'wp_ajax_get_modal_settings', array( $this, 'get_modal_settings' ) );
@@ -62,13 +62,12 @@ class VG_Admin
         require_once VG_PLUGIN_PATH . '/admin/views/add-edit.php';
     }
 
-    public function save_form()
+    public function action_save_form()
     {
-        $errors = [];
-        if (empty(($errors = $this->validate_request($_REQUEST))))
-        {
-            
-        }
+        echo "<pre>";
+        print_r($_REQUEST); die;
+        
+        $form_id = $this->save_form($_REQUEST);
     }
 
     public function get_modal_settings()
@@ -102,6 +101,39 @@ class VG_Admin
                 break ;
         }
         wp_send_json( $response, 200 );
+    }
+
+    public function save_form($data)
+    {
+        $form = $meta = array();
+        if (isset($data['form_id']) && !empty($data['form_id'])) {
+            $form['ID'] = $data['form_id'];
+        }
+
+        if (isset($data['form-title']) && !empty($data['form-title'])) {
+            $form['post_title'] = $data['form-title'];
+        }
+        
+        $form['post_status'] = 'publish';
+        $form['post_type'] = VG_SHORTCODE_POST_TYPE;
+
+        foreach($data as $key => $sub_data) {
+            if (is_array($sub_data)) {
+                $meta[$key] = $sub_data;
+            }
+        }
+
+        $form['meta_input'] = array(
+            'vg_meta_fields' => $meta
+        );
+
+        $form_id_or_error = wp_insert_post($form);
+
+        if ($form_id_or_error instanceof WP_Error) {
+            // something goes wrong
+        }
+
+        // all good
     }
 
     private function the_shortcodes()

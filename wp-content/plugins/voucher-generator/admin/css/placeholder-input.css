@@ -1,0 +1,37 @@
+.vg-placeholder-container {
+    position: relative;
+    top: 3px;
+}
+
+.vg-placeholder-input {
+    padding: 5px 10px;
+    width: 120px;
+}
+
+.vg-placeholder-span {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    background: white;
+    transition: all 0.4s ease-in-out;
+    color: #c4c4c4;
+}
+
+.vg-placeholder-input:focus + .vg-placeholder-span, .vg-placeholder-input-focus + .vg-placeholder-span {
+    top: -10px;
+    font-size: 0.85em;
+    padding: 0 5px;
+    color: #ababab;
+}
+
+@media all and (min-width: 800px) {
+    .vg-placeholder-span {
+        top: 6px;
+    }
+    .vg-placeholder-input {
+        width: initial;
+    }
+    .vg-placeholder-container {
+        top: 0;
+    }
+}

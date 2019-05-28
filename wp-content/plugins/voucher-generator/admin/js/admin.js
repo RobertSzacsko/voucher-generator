@@ -15,9 +15,19 @@ jQuery(document).ready(function($){
         return o;
     };
 
+    // TODO something goes wrong here
     $('.vg-body .vg-container').each(function(index, element) {
         $(this).on('hover', function () {
             $(this).find('.vg-container-actions').toggleClass('vg-default-visibility-hidden');
+        });
+    });
+
+    $('.vg-list-load-more-forms-container .vg-list-load-more-forms').on('touch click', function(element) {
+        let $index = 0;
+        $('.vg-body .vg-container.vg-default-hide').each(function(index, element) {
+            if ($index >= vgJSON.formsPerPage) { return; }
+            $(this).removeClass('vg-default-hide');
+            $index++;
         });
     });
 

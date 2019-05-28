@@ -63,7 +63,7 @@ class VG_Admin
         wp_enqueue_script( 'bootstrap' );
 
         // include vgJSON object to be used in vg-admin-js script
-        wp_localize_script( 'vg-admin-js', 'vgJSON', array( 'ajaxUrl' => admin_url( 'admin-ajax.php' ) ) );
+        wp_localize_script( 'vg-admin-js', 'vgJSON', array( 'ajaxUrl' => admin_url( 'admin-ajax.php' ), 'formsPerPage' => get_option( 'vg_settings_forms_per_page', false ) ) );
     }
 
     public function add_admin_pages()
@@ -75,6 +75,7 @@ class VG_Admin
 
     public function list_forms()
     {
+        // update_option( 'vg_settings_forms_per_page', 2 );
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_die( __( 'You do not have permision to be here!', 'vg' ) );
         }
@@ -97,12 +98,14 @@ class VG_Admin
         );
 
         if ( ! isset( $_GET['forms_status'] ) || empty( $_GET['forms_status'] ) || ! in_array( $_GET['forms_status'], array_keys( $statuses ) ) ) {
-            $forms = $this->filter_forms_by_property( $forms, 'post_status', 'publish' );
+            $forms = array_values( $this->filter_forms_by_property( $forms, 'post_status', 'publish' ) );
             $current_forms_status = 'publish';
         } else {
-            $forms = $this->filter_forms_by_property( $forms, 'post_status', $_GET['forms_status'] );
+            $forms = array_values( $this->filter_forms_by_property( $forms, 'post_status', $_GET['forms_status'] ) );
             $current_forms_status = $_GET['forms_status'];
         }
+
+        $forms_per_page = get_option( 'vg_settings_forms_per_page', false );
 
         require_once VG_PLUGIN_PATH . '/admin/views/list.php';
     }

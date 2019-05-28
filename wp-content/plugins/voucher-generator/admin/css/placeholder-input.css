@@ -1,6 +1,5 @@
 .vg-placeholder-container {
     position: relative;
-    top: 3px;
 }
 
 .vg-placeholder-input {
@@ -30,8 +29,5 @@
     }
     .vg-placeholder-input {
         width: initial;
-    }
-    .vg-placeholder-container {
-        top: 0;
     }
 }

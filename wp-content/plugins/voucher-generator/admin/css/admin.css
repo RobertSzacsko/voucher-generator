@@ -5,8 +5,13 @@
     touch-action: none;
 }
 
+.vg-header > .vg-container, .vg-footer > .vg-container, .vg-body > .vg-container {
+    flex-flow: row wrap;
+}
+
 .vg-col > div,
-.vg-form-settings > div {
+.vg-form-settings > div,
+.vg-body > div.vg-container {
     padding: 10px;
 }
 
@@ -27,6 +32,67 @@
 }
 .vg-col-sm-12 {
     width: 100%;
+}
+
+.vg-col > div.vg-body,
+.vg-col > .vg-table,
+.vg-body .vg-col > div {
+    padding: 0;
+}
+
+.vg-table {
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-shadow: 0px 5px 10px -5px #ccc
+}
+
+.vg-table .vg-header {
+    border-bottom: 1px solid #ccc;
+}
+
+.vg-table .vg-footer {
+    border-top: 1px solid #ccc;
+}
+
+.vg-table .vg-body span{
+    font-size: 1.1em;
+}
+
+.vg-table .vg-body > div:nth-child(odd) {
+    background-color: #fdfdfd;
+}
+
+.vg-table .vg-body > div:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.vg-container-actions {
+    font-size: 0.9em;
+}
+
+.vg-container-actions form{
+    display: inline-block;
+}
+.vg-container-actions .vg-action {
+    border: none;
+    background: none;
+    padding: 0;
+    color: #007bff;
+}
+
+.vg-container-actions .vg-action:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.vg-container-actions .vg-action-trash,
+.vg-container-actions .vg-action-delete {
+    color:#aa0000;
+}
+
+.vg-container-actions .vg-action-trash:hover,
+.vg-container-actions .vg-action-delete:hover {
+    color:#dc3232;
 }
 
 .select-options, .target, .vg-form-settings {
@@ -93,7 +159,7 @@
     float: right;
 }
 
-.clear-float {
+.vg-clear-float {
     clear: both;
 }
 
@@ -111,22 +177,66 @@ body.mobile.modal-open div#wpwrap {
 }
 
 .vg-form-settings-title-container input,
-.vg-form-settings-date-container input {
+.vg-form-settings-date-container .vg-right {
     float:right;
     width: 50%;
     height: 25px;
     border-radius: 4px;
 }
 
-.vg-form-settings-title-container input:after,
-.vg-form-settings-date-container input:after,
-.vg-submit:after {
+.vg-form-settings-title-container input::after,
+.vg-form-settings-date-container .vg-right::after,
+.vg-submit::after,
+.vg-right::after {
     clear: both;
 }
 
-.vg-submit {
+.vg-submit, .vg-right {
     float: right;
 }
+
+.vg-left {
+    float: left;
+}
+
+.vg-default-hide, .vg-hide {
+    display: none;
+}
+
+.vg-default-visibility-hidden {
+    visibility: hidden;
+}
+
+.vg-list-no-forms-container span.vg-no-forms {
+    color: #808080;
+    font-size: 0.9em;
+}
+
+.vg-list-statuses-container {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.vg-list-statuses-container .count {
+    color: #212529;
+}
+
+.vg-list-statuses-container .vg-current-forms-status {
+    font-weight: 600;
+    color: #000;
+}
+.vg-list-statuses-container .vg-current-forms-status .count {
+    font-weight: 400;
+}
+
+.vg-placeholder-container {
+    margin-bottom: 10px;
+}
+
+.vg-list-date-container {
+    font-size: 0.8em;
+}
+
 
 @media all and (min-width: 800px) {
     .vg-container {

@@ -15,6 +15,12 @@ jQuery(document).ready(function($){
         return o;
     };
 
+    $('.vg-body .vg-container').each(function(index, element) {
+        $(this).on('hover', function () {
+            $(this).find('.vg-container-actions').toggleClass('vg-default-visibility-hidden');
+        });
+    });
+
     dragula([document.querySelector('.select-options'), document.querySelector('.target')], {
         mirrorContainer: document.body,
         copy: function (el, source) {

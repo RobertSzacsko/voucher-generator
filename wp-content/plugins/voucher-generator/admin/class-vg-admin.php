@@ -4,13 +4,21 @@ class VG_Admin
 {
     private static $instance = null;
 
+    public $status_message;
+
     public function __construct()
     {
         add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
-        add_action( 'admin_post_vg_add_edit_forms', array( $this, 'add_edit_vouchers_form' ) );
-        add_action( 'admin_post_vg_save_form', array( $this, 'action_save_form' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles_scripts' ) );
+        add_action( 'admin_notices', array( $this, 'maybe_display_notice' ) );
 
+        // actions
+        add_action( 'admin_post_vg_save_form', array( $this, 'save_form' ) );
+        add_action( 'admin_post_vg_trash_form', array( $this, 'trash_form' ) );
+        add_action( 'admin_post_vg_restore_form', array( $this, 'restore_form' ) );
+        add_action( 'admin_post_vg_delete_form', array( $this, 'delete_form' ) );
+
+        // AJAX actions
         add_action( 'wp_ajax_get_modal_settings', array( $this, 'get_modal_settings' ) );
     }
 
@@ -32,10 +40,19 @@ class VG_Admin
 
         wp_register_style( 'vg-admin', '/wp-content/plugins/voucher-generator/admin/css/admin.css', false, '1.0.0' );
         wp_enqueue_style( 'vg-admin' );
-        wp_register_style( 'vg-admin-radio-switch', '/wp-content/plugins/voucher-generator/admin/css/radio-switch.css', false, '1.0.0' );
-        wp_enqueue_style( 'vg-admin-radio-switch' );
         wp_register_script( 'vg-admin-js', '/wp-content/plugins/voucher-generator/admin/js/admin.js', 'jquery', '1.0.0', true );
         wp_enqueue_script( 'vg-admin-js' );
+
+        wp_register_style( 'vg-admin-radio-switch', '/wp-content/plugins/voucher-generator/admin/css/radio-switch.css', false, '1.0.0' );
+        wp_enqueue_style( 'vg-admin-radio-switch' );
+
+        wp_register_style( 'vg-admin-placeholder', '/wp-content/plugins/voucher-generator/admin/css/placeholder-input.css', array( 'vg-admin' ), '1.0.0' );
+        wp_enqueue_style( 'vg-admin-placeholder' );
+        wp_register_script( 'vg-admin-placeholder-js', '/wp-content/plugins/voucher-generator/admin/js/placeholder-input.js', 'jquery', '1.0.0', true );
+        wp_enqueue_script( 'vg-admin-placeholder-js' );
+
+        wp_register_script( 'vg-admin-search-js', '/wp-content/plugins/voucher-generator/admin/js/search.js', 'jquery', '1.0.0', true );
+        wp_enqueue_script( 'vg-admin-search-js' );
 
         // bootstrap
         wp_register_style( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', false, '4.0.0' );
@@ -51,24 +68,157 @@ class VG_Admin
 
     public function add_admin_pages()
     {
-        add_menu_page( __( 'Add/Edit your Forms', 'vg' ), __( 'Voucher generator ', 'vg' ), 'manage_options', 'voucher-generator', array( $this, 'add_edit_vouchers_form' ), 'dashicons-welcome-write-blog', 71 );
+        add_menu_page( __( 'Forms', 'vg' ), __( 'Voucher generator ', 'vg' ), 'manage_options', 'vg-list', array( $this, 'list_forms' ), 'dashicons-welcome-write-blog', 71 );
+        add_submenu_page( 'vg-list', __( 'New form', 'vg' ), __( 'Add new Form ', 'vg' ), 'manage_options', 'vg-add-new', array( $this, 'add_form' ) );
+        add_submenu_page( '', __( 'Edit form', 'vg' ), __( 'Edit Form ', 'vg' ), 'manage_options', 'vg-edit', array( $this, 'edit_form' ) );
     }
 
-    public function add_edit_vouchers_form()
+    public function list_forms()
     {
         if ( ! current_user_can( 'manage_options' ) ) {
-            die( __( 'You do not have permision to be here!', 'vg' ));
+            wp_die( __( 'You do not have permision to be here!', 'vg' ) );
         }
+
+        $forms = $this->get_forms( array( 'post_status' => array( 'trash', 'any' ) ) );
+
+        $statuses = array(
+            'publish'   => array (
+                'html'  => _n_noop( "Published <span class=\"count\">(%s)</span>", "Published <span class=\"count\">(%s)</span>" ),
+                'count' => count( $this->filter_forms_by_property( $forms, 'post_status', 'publish' ) ),
+            ),
+            'draft'     => array(
+                'html'  => _n_noop( "Draft <span class=\"count\">(%s)</span>", "Draft <span class=\"count\">(%s)</span>" ),
+                'count' => count( $this->filter_forms_by_property( $forms, 'post_status', 'draft' ) ),
+            ),
+            'trash'     => array(
+                'html'  => _n_noop( "Trash <span class=\"count\">(%s)</span>", "Trash <span class=\"count\">(%s)</span>" ),
+                'count' => count( $this->filter_forms_by_property( $forms, 'post_status', 'trash' ) ),
+            )
+        );
+
+        if ( ! isset( $_GET['forms_status'] ) || empty( $_GET['forms_status'] ) || ! in_array( $_GET['forms_status'], array_keys( $statuses ) ) ) {
+            $forms = $this->filter_forms_by_property( $forms, 'post_status', 'publish' );
+            $current_forms_status = 'publish';
+        } else {
+            $forms = $this->filter_forms_by_property( $forms, 'post_status', $_GET['forms_status'] );
+            $current_forms_status = $_GET['forms_status'];
+        }
+
+        require_once VG_PLUGIN_PATH . '/admin/views/list.php';
+    }
+
+    public function add_form()
+    {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( __( 'You do not have permision to be here!', 'vg' ) ) ;
+        }
+
         require_once VG_PLUGIN_PATH . '/admin/views/add-edit.php';
     }
 
-    public function action_save_form()
+    public function edit_form()
     {
-        echo "<pre>";
-        print_r($_REQUEST); die;
-        
-        $form_id = $this->save_form($_REQUEST);
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die( __( 'You do not have permision to be here!', 'vg' ) ) ;
+        }
+        if ( ! isset( $_GET['form_id'] ) || empty( $_GET['form_id'] ) ) {
+            wp_die( __( "This page doesn't exists!", 'vg' ) ) ;
+        }
+
+        require_once VG_PLUGIN_PATH . '/admin/views/add-edit.php';
     }
+
+    public function maybe_display_notice()
+    {
+        $notice = get_option( 'vg_admin_notice', false );
+        if( $notice ){
+            delete_option( 'vg_admin_notice' );
+            printf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $notice['type'], $notice['message'] );
+        }
+    }
+
+    /* BEGIN ACTIONS */
+    public function trash_form()
+    {
+        $form_id = $_POST['form_id'];
+        if ( in_array( wp_trash_post( $form_id ), array( false, null ) ) ) {
+            update_option( 'vg_admin_notice', array( 'type' => 'error', 'message' => __( 'Something goes wrong! Please try again.', 'vg' ) ) );
+        }
+
+        update_option( 'vg_admin_notice', array('type' => 'success', 'message' => sprintf( __( 'Form %s was successfully moved to trash!', 'vg' ), $form_id ) ) );
+
+        wp_redirect( VG_URL_LIST, 302 );
+        exit;
+    }
+
+    public function delete_form()
+    {
+        $form_id = $_POST['form_id'];
+        if ( in_array( wp_delete_post( $form_id ), array( false, null ) ) ) {
+            update_option( 'vg_admin_notice', array( 'type' => 'error', 'message' => __( 'Something goes wrong! Please try again.', 'vg' ) ) );
+        }
+
+        update_option( 'vg_admin_notice', array('type' => 'success', 'message' => sprintf( __( 'Form %s was successfully deleted!', 'vg' ), $form_id ) ) );
+
+        wp_redirect( VG_URL_LIST, 302 );
+        exit;
+    }
+
+    public function restore_form()
+    {
+        $form_id = $_POST['form_id'];
+
+        wp_publish_post( $form_id );
+
+        update_option( 'vg_admin_notice', array('type' => 'success', 'message' => sprintf( __( 'Form %s was successfully published!', 'vg' ), $form_id ) ) );
+
+        wp_redirect( VG_URL_LIST, 302 );
+        exit;
+    }
+
+    public function save_form()
+    {
+        $form = $this->vg_save_form($_REQUEST);
+
+        $url = admin_url( 'admin.php?page=vg-list&status=' );
+        if ($form instanceof WP_Error) {
+            $this->status_message = __( 'Something goes wrong! Please try again.', 'vg' );
+            wp_redirect($url . 'error', 302);
+            exit;
+        }
+
+        $this->status_message = __( 'Form was successfully added!', 'vg' );
+        wp_redirect($url . 'succes', 302);
+        exit;
+    }
+
+    public function vg_save_form($data)
+    {
+        $form = $meta = array();
+        if (isset($data['form_id']) && !empty($data['form_id'])) {
+            $form['ID'] = $data['form_id'];
+        }
+
+        if (isset($data['form-title']) && !empty($data['form-title'])) {
+            $form['post_title'] = $data['form-title'];
+        }
+        
+        $form['post_status'] = 'publish';
+        $form['post_type'] = VG_SHORTCODE_POST_TYPE;
+
+        foreach($data as $key => $sub_data) {
+            if (is_array($sub_data)) {
+                $meta[$key] = $sub_data;
+            }
+        }
+
+        $form['meta_input'] = array(
+            '_vg_meta_fields' => $meta
+        );
+
+        return wp_insert_post($form);
+    }
+    /* END ACTIONS */
 
     public function get_modal_settings()
     {
@@ -103,61 +253,20 @@ class VG_Admin
         wp_send_json( $response, 200 );
     }
 
-    public function save_form($data)
+    private function filter_forms_by_property( $array, $key, $filter_value )
     {
-        $form = $meta = array();
-        if (isset($data['form_id']) && !empty($data['form_id'])) {
-            $form['ID'] = $data['form_id'];
-        }
-
-        if (isset($data['form-title']) && !empty($data['form-title'])) {
-            $form['post_title'] = $data['form-title'];
-        }
-        
-        $form['post_status'] = 'publish';
-        $form['post_type'] = VG_SHORTCODE_POST_TYPE;
-
-        foreach($data as $key => $sub_data) {
-            if (is_array($sub_data)) {
-                $meta[$key] = $sub_data;
-            }
-        }
-
-        $form['meta_input'] = array(
-            'vg_meta_fields' => $meta
-        );
-
-        $form_id_or_error = wp_insert_post($form);
-
-        if ($form_id_or_error instanceof WP_Error) {
-            // something goes wrong
-        }
-
-        // all good
-    }
-
-    private function the_shortcodes()
-    {
-        echo $this->get_the_shortcodes();
-    }
-
-    private function get_the_shortcodes()
-    {
-        $shortcodes = $this->get_shortcodes();
-        $html = '';
-
-        foreach( $shortcodes as $shortcode )
-        {
-            $html .= '<option value="';
-            $html .= $shortcode->ID . '">';
-            $html .= $shortcode->post_title . '</option>';
-        }
-
-        return $html;
+        return array_filter( $array, function($item) use ($key, $filter_value) {
+            return $item->$key === $filter_value;
+        } );
     }
     
-    private function get_shortcodes()
+    private function get_forms( $args = array() )
     {
-        return get_posts( array( 'numberposts' => -1, 'post_type' => VG_SHORTCODE_POST_TYPE ) );
+        $default_args = array(
+            'posts_per_page'    => -1,
+            'post_type'         => VG_SHORTCODE_POST_TYPE
+        );
+
+        return get_posts( wp_parse_args( $args, $default_args ) );
     }
 }

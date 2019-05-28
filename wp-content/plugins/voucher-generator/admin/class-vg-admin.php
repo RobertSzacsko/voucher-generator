@@ -131,7 +131,7 @@ class VG_Admin
     public function maybe_display_notice()
     {
         $notice = get_option( 'vg_admin_notice', false );
-        if( $notice ){
+        if( $notice ) {
             delete_option( 'vg_admin_notice' );
             printf( '<div class="notice notice-%s is-dismissible"><p>%s</p></div>', $notice['type'], $notice['message'] );
         }
@@ -145,7 +145,7 @@ class VG_Admin
             update_option( 'vg_admin_notice', array( 'type' => 'error', 'message' => __( 'Something goes wrong! Please try again.', 'vg' ) ) );
         }
 
-        update_option( 'vg_admin_notice', array('type' => 'success', 'message' => sprintf( __( 'Form %s was successfully moved to trash!', 'vg' ), $form_id ) ) );
+        update_option( 'vg_admin_notice', array( 'type' => 'success', 'message' => sprintf( __( 'Form %s was successfully moved to trash!', 'vg' ), $form_id ) ) );
 
         wp_redirect( VG_URL_LIST, 302 );
         exit;
@@ -158,7 +158,7 @@ class VG_Admin
             update_option( 'vg_admin_notice', array( 'type' => 'error', 'message' => __( 'Something goes wrong! Please try again.', 'vg' ) ) );
         }
 
-        update_option( 'vg_admin_notice', array('type' => 'success', 'message' => sprintf( __( 'Form %s was successfully deleted!', 'vg' ), $form_id ) ) );
+        update_option( 'vg_admin_notice', array( 'type' => 'success', 'message' => sprintf( __( 'Form %s was successfully deleted!', 'vg' ), $form_id ) ) );
 
         wp_redirect( VG_URL_LIST, 302 );
         exit;
@@ -170,7 +170,7 @@ class VG_Admin
 
         wp_publish_post( $form_id );
 
-        update_option( 'vg_admin_notice', array('type' => 'success', 'message' => sprintf( __( 'Form %s was successfully published!', 'vg' ), $form_id ) ) );
+        update_option( 'vg_admin_notice', array( 'type' => 'success', 'message' => sprintf( __( 'Form %s was successfully published!', 'vg' ), $form_id ) ) );
 
         wp_redirect( VG_URL_LIST, 302 );
         exit;
@@ -195,19 +195,19 @@ class VG_Admin
     public function vg_save_form($data)
     {
         $form = $meta = array();
-        if (isset($data['form_id']) && !empty($data['form_id'])) {
+        if ( isset( $data['form_id'] ) && ! empty( $data['form_id'] ) ) {
             $form['ID'] = $data['form_id'];
         }
 
-        if (isset($data['form-title']) && !empty($data['form-title'])) {
+        if ( isset( $data['form-title'] ) && ! empty( $data['form-title'] ) ) {
             $form['post_title'] = $data['form-title'];
         }
         
         $form['post_status'] = 'publish';
         $form['post_type'] = VG_SHORTCODE_POST_TYPE;
 
-        foreach($data as $key => $sub_data) {
-            if (is_array($sub_data)) {
+        foreach( $data as $key => $sub_data ) {
+            if ( is_array( $sub_data ) ) {
                 $meta[$key] = $sub_data;
             }
         }
@@ -216,7 +216,7 @@ class VG_Admin
             '_vg_meta_fields' => $meta
         );
 
-        return wp_insert_post($form);
+        return wp_insert_post( $form );
     }
     /* END ACTIONS */
 
@@ -227,26 +227,26 @@ class VG_Admin
             case 'radio' :
             case 'checkbox' :
                 $response['textarea'] = array(
-                    'text' => __( 'Enter options ( value:label )', 'vg' ),
+                    'text'          => __( 'Enter options ( value:label )', 'vg' ),
                 );
 
                 $response['required'] = array(
-                    'radio_switch' => __( 'This field is required?', 'vg' ),
+                    'radio_switch'  => __( 'This field is required?', 'vg' ),
                 );
                 break ;
             default :
                 $response['label'] = array(
-                    'radio_switch' => __( 'Do you want to use a label?', 'vg' ),
-                    'text' => __( 'Enter the text', 'vg' ),
+                    'radio_switch'  => __( 'Do you want to use a label?', 'vg' ),
+                    'text'          => __( 'Enter the text', 'vg' ),
                 );
 
                 $response['placeholder'] = array(
-                    'radio_switch' => __( 'Do you want to use a placeholder?', 'vg' ),
-                    'text' => __( 'Enter the text', 'vg' ),
+                    'radio_switch'  => __( 'Do you want to use a placeholder?', 'vg' ),
+                    'text'          => __( 'Enter the text', 'vg' ),
                 );
                 
                 $response['required'] = array(
-                    'radio_switch' => __( 'This field is required?', 'vg' ),
+                    'radio_switch'  => __( 'This field is required?', 'vg' ),
                 );
                 break ;
         }
@@ -255,7 +255,7 @@ class VG_Admin
 
     private function filter_forms_by_property( $array, $key, $filter_value )
     {
-        return array_filter( $array, function($item) use ($key, $filter_value) {
+        return array_filter( $array, function( $item ) use ( $key, $filter_value ) {
             return $item->$key === $filter_value;
         } );
     }

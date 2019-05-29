@@ -1,15 +1,10 @@
 <div class="wrap">
     <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-    <form method="post" action="<?= admin_url( 'admin-post.php' ); ?>">
-        <input type="hidden" name="action" value="vg_add_edit_forms" />
-        <select>
-            <?php $this->the_shortcodes(); ?>
-        </select>
-    </form>
 
     <main id="main">
         <form method="post" action="<?= admin_url( 'admin-post.php' ); ?>">
             <input type="hidden" name="action" value="vg_save_form" />
+            <?php if ( isset( $_GET['form_id'] ) && ! empty( $_GET['form_id'] ) ) { printf('<input type="hidden" name="form_id" value="%s" />', $_GET['form_id']); } ?>
             <div class="vg-container">        
                 <div class="vg-col vg-col-sm-12 vg-col-md-9">
                     <div class="vg-container">
@@ -43,6 +38,25 @@
                         <div class="vg-col vg-col-sm-12 vg-col-md-8">
                             <div class="target-container">
                                 <div class="target">
+                                    <?php
+                                    if (isset($_GET['form_id']) && !empty($_GET['form_id'])) {
+                                        $form_id = (int)$_GET['form_id'];
+                                        $vg_meta_fields = get_post_meta($form_id, 'vg_meta_fields', true);
+                                        
+                                        $html = '';
+                                        foreach($vg_meta_fields as $field_name => $field) {
+                                            $filed_type = explode('-', $field_name)[0];
+                                            $html .= sprintf('<div class="option-container grab"><div class="%s">Input %s</div>', $filed_type, $filed_type);
+                                            foreach($field as $sub_field_name => $sub_field) {
+                                                foreach($sub_field as $sub_field_option_name => $sub_field_option) {
+                                                    $html .= sprintf('<input type="hidden" name="%s[%s][%s]" value="%s" />', $field_name, $sub_field_name, $sub_field_option_name, $sub_field_option);
+                                                }
+                                            }
+                                            $html .= '</div>';
+                                        }
+                                        echo $html;
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -61,22 +75,25 @@
                             <div class="vg-form-settings-title-container">
                                 <div class="vg-form-settings-title">
                                     <span><?php _e( 'Title', 'vg' );?></span>
-                                    <!-- TODO echo form-title -->
-                                    <input type="text" name="form-title" value="<?php echo '';?>" />
+                                    <input class="vg-right" type="text" name="form-title" value="<?php if (isset($curent_form)) { echo $curent_form->post_title; } ?>" />
                                 </div>
                             </div>
                             <!-- data formului -->
                             <div class="vg-form-settings-date-container">
                                 <div class="vg-form-settings-date">
                                     <span><?php _e( 'Date', 'vg' );?></span>
-                                    <!-- TODO echo form-date -->
-                                    <input type="text" name="form-date" value="<?php echo '';?>" />
+                                    <span class="vg-right">
+                                        <?php if (isset($curent_form))
+                                        {
+                                            echo date_i18n( sprintf( '%s %s', get_option( 'date_format' ), get_option( 'time_format' ) ), strtotime( $curent_form->post_date ) );
+                                        }
+                                        ?>
+                                    </span>
                                 </div>
                             </div>
                             <!-- save & preview -->
                             <div class="vg-form-settings-actions-container">
                                 <div class="vg-form-settings-actions">
-                                    <!-- TODO echo form-actions -->
                                     <input class="btn btn-secondary vg-preview" type="button" name="preview" value="<?php _e( 'Preview', 'vg' );?>" />
                                     <input class="btn btn-primary vg-submit" type="submit" name="form-submit" value="<?php _e( 'Save', 'vg' );?>" />
                                 </div>
@@ -109,7 +126,7 @@
                                     <input type="checkbox" name="label][radio_switch]">
                                     <span class="slider round"></span>
                                 </label>
-                                <div class="clear-float"></div>
+                                <div class="vg-clear-float"></div>
                             </div>
                         </div>
                         <div class="hide row second-row">
@@ -118,7 +135,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <input type="text" name="label][text]">
-                                <div class="clear-float"></div>
+                                <div class="vg-clear-float"></div>
                             </div>
                         </div>
                     </div>
@@ -133,7 +150,7 @@
                                     <input type="checkbox" name="placeholder][radio_switch]">
                                     <span class="slider round"></span>
                                 </label>
-                                <div class="clear-float"></div>
+                                <div class="vg-clear-float"></div>
                             </div>
                         </div>
                         <div class="hide row second-row">
@@ -142,7 +159,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <input type="text" name="placeholder][text]">
-                                <div class="clear-float"></div>
+                                <div class="vg-clear-float"></div>
                             </div>
                         </div>
                     </div>
@@ -157,7 +174,7 @@
                                     <input type="checkbox" name="required][radio_switch]">
                                     <span class="slider round"></span>
                                 </label>
-                                <div class="clear-float"></div>
+                                <div class="vg-clear-float"></div>
                             </div>
                         </div>
                     </div>
@@ -188,7 +205,7 @@
                             </div>
                             <div class="col-xs-12 col-md-6">
                                 <textarea name="textarea][text]"></textarea>
-                                <div class="clear-float"></div>
+                                <div class="vg-clear-float"></div>
                             </div>
                         </div>
                     </div>
@@ -203,7 +220,7 @@
                                     <input type="checkbox" name="required][radio_switch]">
                                     <span class="slider round"></span>
                                 </label>
-                                <div class="clear-float"></div>
+                                <div class="vg-clear-float"></div>
                             </div>
                         </div>
                     </div>

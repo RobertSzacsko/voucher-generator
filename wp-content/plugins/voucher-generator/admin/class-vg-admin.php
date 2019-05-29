@@ -75,7 +75,6 @@ class VG_Admin
 
     public function list_forms()
     {
-        // update_option( 'vg_settings_forms_per_page', 2 );
         if ( ! current_user_can( 'manage_options' ) ) {
             wp_die( __( 'You do not have permision to be here!', 'vg' ) );
         }

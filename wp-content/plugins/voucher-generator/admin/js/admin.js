@@ -15,13 +15,7 @@ jQuery(document).ready(function($){
         return o;
     };
 
-    // TODO something goes wrong here
-    $('.vg-body .vg-container').each(function(index, element) {
-        $(this).on('hover', function () {
-            $(this).find('.vg-container-actions').toggleClass('vg-default-visibility-hidden');
-        });
-    });
-
+    // BEGIN load more button
     $('.vg-list-load-more-forms-container .vg-list-load-more-forms').on('touch click', function(element) {
         let $index = 0;
         $('.vg-body .vg-container.vg-default-hide').each(function(index, element) {
@@ -30,6 +24,11 @@ jQuery(document).ready(function($){
             $index++;
         });
     });
+
+    (function ($element) {
+        if ($('.vg-body .vg-container.vg-default-hide').length === 0) { $element.addClass('vg-hide'); } else { $element.removeClass('vg-hide'); }
+    }($('.vg-list-load-more-forms-container')));
+    // END load more button
 
     dragula([document.querySelector('.select-options'), document.querySelector('.target')], {
         mirrorContainer: document.body,

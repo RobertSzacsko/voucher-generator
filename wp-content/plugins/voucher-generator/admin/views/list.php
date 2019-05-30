@@ -53,12 +53,12 @@
                                     </div>
                                 <?php else: ?>
                                     <?php foreach($forms as $key => $form): ?>
-                                        <div class="vg-container<?php if ( $key >= $forms_per_page ) { echo ' vg-default-hide'; } ?>">
+                                        <div class="vg-container vg-visibility<?php if ( $key >= $forms_per_page ) { echo ' vg-default-hide'; } ?>">
                                             <div class="vg-col vg-col-sm-8 vg-col-md-8">
                                                 <div class="vg-container-title">
                                                     <span class="vg-title"><?php echo $form->post_title; ?></span>
                                                 </div>
-                                                <div class="vg-container-actions vg-default-visibility-hidden">
+                                                <div class="vg-container-actions">
                                                     <?php if ( ! isset( $_GET['forms_status'] ) || $_GET['forms_status'] !== 'trash' ) : ?>
                                                         <a href="<?php printf( '%s&form_id=%d', VG_URL_EDIT, $form->ID ); ?>" class="vg-action vg-action-edit"><?php _ex( 'Edit', 'list form actions', 'vg' ); ?></a>
                                                          |
@@ -112,7 +112,7 @@
         </div>
         <div class="vg-container">
             <div class="vg-col vg-col-sm-12 vg-col-md-12">
-                <div class="vg-list-load-more-forms-container">
+                <div class="vg-list-load-more-forms-container vg-hide">
                     <input type="button" class="button vg-right vg-list-load-more-forms" value="<?= __( 'Load more Forms', 'vg' ); ?>" />
                     <div class="vg-clear"></div>
                 </div>

@@ -80,21 +80,28 @@ class VG_Admin
         }
 
         $forms = $this->get_forms( array( 'post_status' => array( 'trash', 'any' ) ) );
-
         $statuses = array(
-            'publish'   => array (
-                'html'  => _n_noop( "Published <span class=\"count\">(%s)</span>", "Published <span class=\"count\">(%s)</span>" ),
-                'count' => count( $this->filter_forms_by_property( $forms, 'post_status', 'publish' ) ),
+            'publish' => array(
+                'html'  => _nx_noop( 'Published <span class="count">(%s)</span>', 'Published <span class="count">(%s)</span>', 'list-status', 'vg' ),
             ),
             'draft'     => array(
-                'html'  => _n_noop( "Draft <span class=\"count\">(%s)</span>", "Draft <span class=\"count\">(%s)</span>" ),
-                'count' => count( $this->filter_forms_by_property( $forms, 'post_status', 'draft' ) ),
+                'html'  => _nx_noop( 'Draft <span class="count">(%s)</span>', 'Draft <span class="count">(%s)</span>', 'list-status', 'vg' ),
             ),
             'trash'     => array(
-                'html'  => _n_noop( "Trash <span class=\"count\">(%s)</span>", "Trash <span class=\"count\">(%s)</span>" ),
-                'count' => count( $this->filter_forms_by_property( $forms, 'post_status', 'trash' ) ),
+                'html'  => _nx_noop( 'Trash <span class="count">(%s)</span>', 'Trash <span class="count">(%s)</span>', 'list-status', 'vg' ),
             )
         );
+
+        while ( $status = current( $statuses ) ) {
+            $curent_key = key( $statuses );
+
+            if ( ( $count = count( $this->filter_forms_by_property( $forms, 'post_status', $curent_key ) ) ) === 0 ) {
+                unset( $statuses[$curent_key] );
+            } else {
+                $statuses[$curent_key]['count'] = $count;
+                next( $statuses );
+            }
+        }
 
         if ( ! isset( $_GET['forms_status'] ) || empty( $_GET['forms_status'] ) || ! in_array( $_GET['forms_status'], array_keys( $statuses ) ) ) {
             $forms = array_values( $this->filter_forms_by_property( $forms, 'post_status', 'publish' ) );

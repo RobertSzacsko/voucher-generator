@@ -169,7 +169,7 @@ class VG_Admin
 
         update_option( 'vg_admin_notice', array( 'type' => 'success', 'message' => sprintf( __( 'Form %s was successfully deleted!', 'vg' ), $form_id ) ) );
 
-        wp_redirect( VG_URL_LIST, 302 );
+        wp_redirect( VG_URL_LIST . '&forms_status=trash', 302 );
         exit;
     }
 

@@ -4,8 +4,10 @@
 
     <div class="vg-list-search-statuses-container">
         <div class="vg-list-statuses-container vg-left">
-            <?php $last_key = array_keys( $statuses )[count( $statuses ) - 1]; ?>
-            <?php foreach ( $statuses as $status_name => $status ) {
+            <?php
+            if ( ( $count = count( $statuses ) ) > 0 ) { $last_key = array_keys( $statuses )[$count - 1]; }
+
+            foreach ( $statuses as $status_name => $status ) {
                 $class_curent_form_status = ( $current_forms_status === $status_name) ? 'vg-current-forms-status' : '' ;
                 printf( '<a class="%s" href="%s&forms_status=%s">%s</a>', $class_curent_form_status , VG_URL_LIST, $status_name, sprintf( translate_nooped_plural( $status['html'], $status['count'] ), $status['count'] ) );
                 if ( $status_name !== $last_key ) {

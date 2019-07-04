@@ -31,39 +31,42 @@ class VG_Admin
         return self::$instance;
     }
 
-    public function enqueue_styles_scripts()
+    public function enqueue_styles_scripts( $page_name )
     {
         // dragula
         wp_enqueue_script( 'dragula-drag-drop', 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js', array(), null, true );
-        wp_register_style( 'dragula', '/wp-content/plugins/voucher-generator/admin/css/dragula.css', false, '1.0.0' );
+        wp_register_style( 'dragula', VG_PLUGIN_URL . 'admin/css/dragula.css', false, '1.0.0' );
         wp_enqueue_style( 'dragula' );
-
-        wp_register_style( 'vg-admin', '/wp-content/plugins/voucher-generator/admin/css/admin.css', false, '1.0.0' );
+        
+        wp_register_style( 'vg-admin', VG_PLUGIN_URL . 'admin/css/admin.css', false, '1.0.0' );
         wp_enqueue_style( 'vg-admin' );
-        wp_register_script( 'vg-admin-js', '/wp-content/plugins/voucher-generator/admin/js/admin.js', 'jquery', '1.0.0', true );
+        wp_register_script( 'vg-admin-js', VG_PLUGIN_URL . 'admin/js/admin.js', 'jquery', '1.0.0', true );
         wp_enqueue_script( 'vg-admin-js' );
-
-        wp_register_style( 'vg-admin-radio-switch', '/wp-content/plugins/voucher-generator/admin/css/radio-switch.css', false, '1.0.0' );
-        wp_enqueue_style( 'vg-admin-radio-switch' );
-
-        wp_register_style( 'vg-admin-placeholder', '/wp-content/plugins/voucher-generator/admin/css/placeholder-input.css', array( 'vg-admin' ), '1.0.0' );
-        wp_enqueue_style( 'vg-admin-placeholder' );
-        wp_register_script( 'vg-admin-placeholder-js', '/wp-content/plugins/voucher-generator/admin/js/placeholder-input.js', 'jquery', '1.0.0', true );
-        wp_enqueue_script( 'vg-admin-placeholder-js' );
-
-        wp_register_script( 'vg-admin-search-js', '/wp-content/plugins/voucher-generator/admin/js/search.js', 'jquery', '1.0.0', true );
-        wp_enqueue_script( 'vg-admin-search-js' );
-
-        // bootstrap
-        wp_register_style( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', false, '4.0.0' );
-        wp_enqueue_style( 'bootstrap' );
-        wp_register_script( 'bootstrap-popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', 'jquery', '1.12.9', true );
-        wp_enqueue_script( 'bootstrap-popper' );
-        wp_register_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', 'jquery', '4.0.0', true );
-        wp_enqueue_script( 'bootstrap' );
 
         // include vgJSON object to be used in vg-admin-js script
         wp_localize_script( 'vg-admin-js', 'vgJSON', array( 'ajaxUrl' => admin_url( 'admin-ajax.php' ), 'formsPerPage' => get_option( 'vg_settings_forms_per_page', false ) ) );
+
+        error_log(print_r($page_name, 1));
+        if ( $page_name === 'toplevel_page_vg-list' ) {
+            wp_register_style( 'vg-admin-placeholder', VG_PLUGIN_URL . 'admin/css/placeholder-input.css', array( 'vg-admin' ), '1.0.0' );
+            wp_enqueue_style( 'vg-admin-placeholder' );
+            wp_register_script( 'vg-admin-placeholder-js', VG_PLUGIN_URL . 'admin/js/placeholder-input.js', array( 'vg-admin-js' ,'jquery' ), '1.0.0', true );
+            wp_enqueue_script( 'vg-admin-placeholder-js' );
+
+            wp_register_script( 'vg-admin-search-js', VG_PLUGIN_URL . 'admin/js/search.js', 'jquery', '1.0.0', true );
+            wp_enqueue_script( 'vg-admin-search-js' );
+        }
+        
+        if ( $page_name === 'voucher-generator_page_vg-add-new' || $page_name === 'voucher-generator_page_vg-edit' ) {
+            wp_register_style( 'vg-admin-radio-switch', VG_PLUGIN_URL . 'admin/css/radio-switch.css', false, '1.0.0' );
+            wp_enqueue_style( 'vg-admin-radio-switch' );
+
+            // bootstrap
+            wp_register_style( 'bootstrap-modal', VG_PLUGIN_URL . 'admin/css/bootstrap.min.css', false, '4.0.0' );
+            wp_enqueue_style( 'bootstrap-modal' );
+            wp_register_script( 'bootstrap-modal-js', VG_PLUGIN_URL . 'admin/js/bootstrap.min.js', 'jquery', '1.12.9', true );
+            wp_enqueue_script( 'bootstrap-modal-js' );
+        }
     }
 
     public function add_admin_pages()

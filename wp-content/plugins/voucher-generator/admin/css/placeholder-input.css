@@ -1,26 +1,28 @@
+/* Begin Default style */
+
 .vg-placeholder-container {
     position: relative;
 }
 
-.vg-placeholder-input {
+.vg-placeholder-container .vg-placeholder-input {
     padding: 5px 10px;
-    width: 120px;
+    width: 150px;
+    background-color: #f1f1f1;
 }
 
 .vg-placeholder-span {
     position: absolute;
     top: 8px;
     left: 10px;
-    background: white;
+    background: #f1f1f1;
     transition: all 0.2s ease-in-out;
-    color: #c4c4c4;
+    color: rgba(68,68,68,0.7);
 }
 
 .vg-placeholder-input:focus + .vg-placeholder-span, .vg-placeholder-input-focus + .vg-placeholder-span {
     top: -10px;
     font-size: 0.85em;
     padding: 0 5px;
-    color: #ababab;
 }
 
 @media all and (min-width: 800px) {
@@ -31,3 +33,5 @@
         width: initial;
     }
 }
+
+/* End Default style */

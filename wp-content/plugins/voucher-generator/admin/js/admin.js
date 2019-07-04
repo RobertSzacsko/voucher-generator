@@ -52,17 +52,18 @@ jQuery(document).ready(function($){
     $('#general-modal input[type=checkbox]').on('change', function (event) {
         var inputId = $(this).attr('name').split('][')[0];
 
+        console.log(inputId);
         if ($(this).is(':checked')) {
-            $('#' + inputId + '-col > div.second-row').removeClass('hide');
+            $('#' + inputId + '-col > div.vg-second-container').removeClass('hide');
         } else {
-            $('#' + inputId + '-col > div.second-row').addClass('hide');
+            $('#' + inputId + '-col > div.vg-second-container').addClass('hide');
         }
     });
 
     $('.vg-save-btn').on('click touch', function (event) {
         var count = $('.target-container .option-container').length;
-        var target = $('.target-container .option-container:last-child');
-        var field = $('.target-container .option-container:last-child div').attr('class');
+        var target = $('.target-container .option-container:not(:has(input))');
+        var field = $('.target-container .option-container:not(:has(input)) div').attr('class');
         $(this).parent().prev().find('input, textarea').each(function (index, tag) {
             let name = $(tag).prop('name');
             let value;

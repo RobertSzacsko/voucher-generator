@@ -16,6 +16,9 @@ Domain Path:  /languages/vg
 if ( ! defined( 'VG_PLUGIN_PATH' ) ) {
     define( 'VG_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 }
+if ( ! defined( 'VG_PLUGIN_URL' ) ) {
+    define( 'VG_PLUGIN_URL', get_option( 'siteurl' ) . '/wp-content/plugins/voucher-generator/' );
+}
 if ( ! defined( 'VG_SHORTCODE_POST_TYPE' ) ) {
     define( 'VG_SHORTCODE_POST_TYPE', 'vg_shortcode' );    
 }

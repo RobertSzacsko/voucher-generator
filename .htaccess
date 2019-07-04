@@ -1,12 +1,37 @@
+# Begin Varnish
+
+#SetEnvIf X-Forwarded-Proto "https" HTTPS=on
+#Header append Vary: X-Forwarded-Proto
+
+#<IfModule mod_rewrite.c>
+#  RewriteEngine on
+#  RewriteCond %{HTTPS} !=on
+#  RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+#  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#</IfModule>
+
+#End Varnish
+
+
+# Begin OPCache
+
+#php_flag opcache.enable On
+#php_flag opcache.validate_timestamps On
+#php_flag opcache.revalidate_freq 60
+#php_flag opcache.max_accelerated_files 10000
+#php_flag opcache.memory_consumption 256
+#php_flag opcache.interned_strings_buffer 16
+
+# End OPCache
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /voucher-generator/
+RewriteBase /
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /voucher-generator/index.php [L]
+RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress

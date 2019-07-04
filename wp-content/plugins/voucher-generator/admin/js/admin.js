@@ -43,7 +43,6 @@ jQuery(document).ready(function($){
             }
     }).on('drop', function (el, target, source, sibling) {
         if (source === document.querySelector('.select-options') && target === document.querySelector('.target')) {
-            // document.getElementById(el.className).modal('show');
             setInputValue($('#modal-settings #field-id'), el.firstElementChild.className);
             makeAjaxRequest($('#modal-settings'), el.firstElementChild.className);
         }

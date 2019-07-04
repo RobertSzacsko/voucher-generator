@@ -20,7 +20,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #c3c3c3;
+    background-color: rgba(195,195,195, 0.5);;
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -38,11 +38,11 @@
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #0085ba;
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #0085ba;
   }
   
   input:checked + .slider:before {

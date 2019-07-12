@@ -51,7 +51,6 @@ jQuery(document).ready(function($){
     $('#general-modal input[type=checkbox]').on('change', function (event) {
         var inputId = $(this).attr('name').split('][')[0];
 
-        console.log(inputId);
         if ($(this).is(':checked')) {
             $('#' + inputId + '-col > div.vg-second-container').removeClass('hide');
         } else {
@@ -91,9 +90,7 @@ jQuery(document).ready(function($){
             success: function (response, status, xhr) {
                 initModal(response, field);
             },
-            error: function (xhr, status, error) {
-
-            }
+            error: function (xhr, status, error) {}
         })
     }
 

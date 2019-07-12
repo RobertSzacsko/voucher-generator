@@ -10,6 +10,6 @@ jQuery(document).ready(function($) {
             } else {
                 $element.removeClass('vg-placeholder-input-focus');
             }
-        }($('.vg-placeholder-input')));
+        }($(this)));
     }); 
 });

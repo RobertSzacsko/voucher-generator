@@ -49,6 +49,7 @@
                                         $form_id = (int)$_GET['form_id'];
                                         $vg_meta_fields = get_post_meta($form_id, 'vg_meta_fields', true);
                                         
+                                        // TODO add a conditional
                                         $html = '';
                                         foreach($vg_meta_fields as $field_name => $field) {
                                             $filed_type = explode('-', $field_name)[0];
@@ -233,6 +234,25 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="button button-primary button-large vg-save-btn"><?php _e( 'Save', 'vg' ); ?></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="preview-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header vg-modal-header">
+                    <h3 class="modal-title vg-modal-title"><?php _e( 'Preview form', 'vg' ); ?></h3>
+                    <button type="button" class="close vg-close-icon" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button button-secondary button-large vg-close-btn"><?php _e( 'Close', 'vg' ); ?></button>
                 </div>
             </div>
         </div>

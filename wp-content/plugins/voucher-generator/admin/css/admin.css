@@ -123,7 +123,13 @@
 }
 .option-container {
     padding: 5px 5px 0 5px;
+    transition: transform .2s ease-in-out;
 }
+/* TODO not finished */
+.option-container:hover {
+    transform: scale(1.05);
+}
+
 .option-container > div {
     background-color: rgba(195,195,195, 0.5);
     border-radius: 4px;
@@ -137,6 +143,21 @@
 .target {
     min-height: 100px;
 }
+
+.target .option-container > div {
+    position: relative;
+}
+
+.target .option-container > div:after {
+    content: " ";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: url("/wp-content/plugins/voucher-generator/admin/assets/three-dots.png") no-repeat center center;
+    top: 4px;
+    right: 0;
+    cursor: pointer;
+} 
 
 .modal-setings.hide,
 .row.hide {

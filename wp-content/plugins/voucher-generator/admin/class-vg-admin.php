@@ -37,7 +37,7 @@ class VG_Admin
         wp_enqueue_script( 'dragula-drag-drop', 'https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js', array(), null, true );
         wp_register_style( 'dragula', VG_PLUGIN_URL . 'admin/css/dragula.css', false, '1.0.0' );
         wp_enqueue_style( 'dragula' );
-        
+
         wp_register_style( 'vg-admin', VG_PLUGIN_URL . 'admin/css/admin.css', false, '1.0.0' );
         wp_enqueue_style( 'vg-admin' );
         wp_register_script( 'vg-admin-js', VG_PLUGIN_URL . 'admin/js/admin.js', 'jquery', '1.0.0', true );
@@ -60,6 +60,10 @@ class VG_Admin
         if ( $page_name === 'voucher-generator_page_vg-add-new' || $page_name === 'voucher-generator_page_vg-edit' ) {
             wp_register_style( 'vg-admin-radio-switch', VG_PLUGIN_URL . 'admin/css/radio-switch.css', false, '1.0.0' );
             wp_enqueue_style( 'vg-admin-radio-switch' );
+
+            // preview
+            // wp_register_script( 'preview-js', VG_PLUGIN_URL . 'admin/js/preview.js', 'jquery', '1.0.0', true );
+            // wp_enqueue_script( 'preview-js' );
 
             // bootstrap
             wp_register_style( 'bootstrap-modal', VG_PLUGIN_URL . 'admin/css/bootstrap.min.css', false, '4.0.0' );
